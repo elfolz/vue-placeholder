@@ -41,28 +41,26 @@ export default {
 			return this.$store.state.alertData
 		}
 	},
-	created() {
-		this.refreshWindowSize()
-	},
 	mounted() {
-		window.addEventListener('resize', () => {
-			this.refreshWindowSize()
-		})
+		window.onresize = () => {
+			this.refreshPageSize()
+		}
 	},
 	methods: {
 		updateApp() {
 			location.reload(true)
 		},
-		refreshWindowSize() {
-			document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`)
-		}
+		refreshPageSize() {
+			document.body.style.setProperty('--vh', `${window.innerHeight}px`)
+			this.$root.$emit('resize')
+		},
 	}
 }
 </script>
 
 <style lang="scss">
-* {
-	touch-action: none;
+*:focus {
+	outline: none;
 }
 :root {
 	--vh: 100vh;
@@ -82,21 +80,22 @@ export default {
 ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
 	background: transparent;
 }
-html, body {
+html {
 	overflow: hidden !important;
 }
-.v-application--wrap {
-	height: calc(var(--vh) - env(safe-area-inset-top, 0) - env(safe-area-inset-bottom, 0));
-	min-height: calc(var(--vh) - env(safe-area-inset-top, 0) - env(safe-area-inset-bottom, 0)) !important;
+img {
+	-webkit-user-drag: none;
+	user-drag: none;
 }
 .emoji {
 	font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
 	font-weight: 400 !important;
 }
 .v-toolbar {
-	height: 56px !important;
+	height: calc(56px + env(safe-area-inset-top, 0)) !important;
 	.v-toolbar__content {
-		height: 56px !important;
+		height: calc(56px + env(safe-area-inset-top, 0)) !important;
+		padding-top: env(safe-area-inset-top, 0) !important;
 	}
 }
 .v-list {
@@ -108,14 +107,17 @@ html, body {
 	}
 }
 .v-card {
-	.v-card__text {
+	.v-card__title {
 		padding: 12px !important;
+	}
+	.v-card__text {
+		padding: 0 12px 12px !important;
 	}
 	.v-card__actions {
 		display: flex;
 		justify-content: space-between;
 		padding: 0 12px 12px !important;
-		.v-btn {
+		> .v-btn {
 			&:only-of-type {
 				margin-left: auto;
 			}
@@ -125,8 +127,35 @@ html, body {
 .v-card, .v-sheet.v-snack__wrapper {
 	border-radius: 8px !important;
 }
-.v-card, .v-navigation-drawer {
+.v-btn--fixed {
+	&.v-btn--top {
+		top: calc(env(safe-area-inset-top, 0) + 12px) !important;
+	}
+	&.v-btn--bottom {
+		bottom: calc(env(safe-area-inset-bottom, 0) + 12px) !important;
+	}
+}
+.v-snack {
+	&.v-snack--top {
+		top: env(safe-area-inset-top, 0) !important;
+	}
+	&.v-snack--bottom {
+		bottom: env(safe-area-inset-bottom, 0) !important;
+	}
+	.v-snack__wrapper {
+		&.warning {
+			color: rgba(0,0,0,0.87) !important;
+			.v-btn {
+				color: rgba(0,0,0,0.87) !important;
+			}
+		}
+	}
+}
+.v-card, .v-navigation-drawer, .v-sheet, .v-overlay--active, .banner {
 	backdrop-filter: blur(10px);
+	> .v-overlay__scrim {
+		backdrop-filter: blur(10px);
+	}
 }
 .v-skeleton-loader {
 	width: 100%;
@@ -134,17 +163,39 @@ html, body {
 		background: none !important;
 	}
 }
+.v-bottom-sheet {
+	border-top-left-radius: 12px !important;
+	border-top-right-radius: 12px !important;
+}
+.v-navigation-drawer__content {
+	padding-top: env(safe-area-inset-top, 0);
+	padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.banner {
+	position: fixed;
+	display: block;
+	text-align: center;
+	padding: 12px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	bottom: env(safe-area-inset-bottom, 0);
+	z-index: 1000;
+}
 .theme--dark {
+	--v-overlay: rgba(255,255,255,0.05);
+	--v-underlay: rgba(0,0,0,0.2);
 	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
 	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer {
+	.v-navigation-drawer, .v-bottom-sheet {
 		background-color: rgba(40,40,40,0.75) !important;
 	}
 }
 .theme--light {
+	--v-overlay: rgba(255,255,255,0.25);
+	--v-underlay: rgba(0,0,0,0.05);
 	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
 	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer {
+	.v-navigation-drawer, .v-bottom-sheet {
 		background-color: rgba(230,240,255,0.65) !important;
 	}
 }
@@ -153,5 +204,18 @@ html, body {
 }
 .fade-enter, .fade-leave-to {
 	opacity: 0;
+}
+@media screen and (min-width: 481px) {
+	.banner {
+		left: 50%;
+		width: 480px;
+		transform: translateX(-50%);
+	}
+}
+@media screen and (max-width: 480px) {
+	.banner {
+		left: 0;
+		right: 0;
+	}
 }
 </style>

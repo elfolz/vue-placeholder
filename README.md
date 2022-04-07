@@ -1,4 +1,4 @@
-# taron
+# Vue Placeholder
 
 ## Project setup
 ```
