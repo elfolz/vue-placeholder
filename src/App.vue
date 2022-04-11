@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import device from './helpers/deviceChecker'
+
 export default {
 	computed: {
 		alert: {
@@ -51,7 +53,7 @@ export default {
 			location.reload(true)
 		},
 		refreshPageSize() {
-			document.body.style.setProperty('--vh', `${window.innerHeight}px`)
+			document.body.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
 			this.$root.$emit('resize')
 		},
 	}
@@ -80,7 +82,7 @@ export default {
 ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
 	background: transparent;
 }
-html {
+html, body {
 	overflow: hidden !important;
 }
 img {
@@ -90,6 +92,13 @@ img {
 .emoji {
 	font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
 	font-weight: 400 !important;
+}
+.v-application--wrap {
+	padding-top: env(safe-area-inset-top, 0);
+	padding-bottom: env(safe-area-inset-bottom, 0);
+	height: var(--vh) !important;
+	min-height: var(--vh) !important;
+	overflow: auto;
 }
 .v-toolbar {
 	height: calc(56px + env(safe-area-inset-top, 0)) !important;
@@ -176,9 +185,10 @@ img {
 	display: block;
 	text-align: center;
 	padding: 12px;
+	bottom: 0;
 	border-top-left-radius: 12px;
 	border-top-right-radius: 12px;
-	bottom: env(safe-area-inset-bottom, 0);
+	padding-bottom: env(safe-area-inset-bottom, 0);
 	z-index: 1000;
 }
 .theme--dark {
