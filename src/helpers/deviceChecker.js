@@ -16,7 +16,7 @@ export default () => {
 
 	return {
 		name: name,
-		standalone: standalone || name == 'windows' || name == 'mac',
+		standalone: standalone,
 		isMobile: name == 'android' || name == 'ios'
 	}
 

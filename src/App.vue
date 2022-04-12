@@ -1,5 +1,7 @@
 <template>
 	<v-app>
+		<!-- content -->
+		<router-view />
 		<!-- alerts -->
 		<v-snackbar bottom v-model="alert" :light="!$vuetify.theme.dark" :timeout="5000" :color="alertData.color || null" @click.native="alert=false">
 			{{alertData.text}}
@@ -14,14 +16,23 @@
 				<v-btn text icon v-bind="attrs"><v-icon>cached</v-icon></v-btn>
 			</template>
 		</v-snackbar>
-		<router-view />
+		<!-- install pwa -->
+		<banner-install-pwa />
+		<!-- cookies -->
+		<banner-cookies-warning />
 	</v-app>
 </template>
 
 <script>
 import device from './helpers/deviceChecker'
+import bannerInstallPwa from './components/bannerInstallPwa'
+import bannerCookiesWarning from './components/bannerCookiesWarning.vue'
 
 export default {
+	components: {
+		bannerInstallPwa,
+		bannerCookiesWarning
+	},
 	computed: {
 		alert: {
 			get() {
