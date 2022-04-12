@@ -30,7 +30,7 @@ export default {
 		}
 	},
 	mounted() {
-		if (!this.device.isMobile) return
+		if (!this.device.isMobile || this.device.standalone) return
 		this.show = true
 		setTimeout(() => {
 			this.show = false

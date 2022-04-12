@@ -66,7 +66,7 @@ export default {
 		refreshPageSize() {
 			document.body.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
 			this.$root.$emit('resize')
-		},
+		}
 	}
 }
 </script>
