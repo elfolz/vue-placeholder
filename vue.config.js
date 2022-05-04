@@ -1,6 +1,5 @@
-const pkg = require('./package.json')
-
 module.exports = {
+	transpileDependencies: true,
 	productionSourceMap: false,
 	configureWebpack: {
 		performance: {
@@ -13,30 +12,30 @@ module.exports = {
 		}
 	},
 	pwa: {
-		name: pkg.name,
+		name: 'Placeholder',
 		themeColor: '#000',
 		appleMobileWebAppCapable: 'yes',
-		appleMobileWebAppStatusBarStyle: 'blackTranslucent',
+		appleMobileWebAppStatusBarStyle: 'black-translucent',
 		workboxPluginMode: 'InjectManifest',
 		workboxOptions: {
-			swSrc: 'src/plugins/service-worker.js',
+			swSrc: './src/plugins/service-worker.js',
 			exclude: [
-				/.*\.json$/gim
+				/.*\.json$/gi,
+				/\.nojekyll/gi,
+				/robots\.txt/gi,
+				/CNAME/gi
 			]
 		},
 		iconPaths: {
 			faviconSVG: null,
 			favicon32: 'img/icons/favicon-32x32.png',
 			favicon16: 'img/icons/favicon-16x16.png',
-			appleTouchIcon: 'img/icons/apple-touch-icon-152x152.png',
+			appleTouchIcon: 'img/icons/apple-touch-icon.png',
 			maskIcon: null,
 			msTileImage: null,
 		},
 		manifestOptions: {
 			background_color: '#ff7e00'
 		}
-	},
-	devServer: {
-		disableHostCheck: true
 	}
 }
