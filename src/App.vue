@@ -72,6 +72,9 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+	box-sizing: border-box;
+}
 *:focus {
 	outline: none;
 }
@@ -117,6 +120,11 @@ img {
 		height: calc(56px + env(safe-area-inset-top, 0)) !important;
 		padding-top: env(safe-area-inset-top, 0) !important;
 	}
+}
+.v-bottom-navigation {
+	position: fixed !important;
+	padding-bottom: env(safe-area-inset-bottom, 0);
+	z-index: 999;
 }
 .v-list {
 	border-radius: 6px !important;
@@ -171,7 +179,7 @@ img {
 		}
 	}
 }
-.v-card, .v-navigation-drawer, .v-sheet, .v-overlay--active, .banner {
+.v-card, .v-navigation-drawer, .v-sheet, .v-overlay--active, .v-btn.translucent, .banner {
 	backdrop-filter: blur(10px);
 	> .v-overlay__scrim {
 		backdrop-filter: blur(10px);
@@ -207,7 +215,8 @@ img {
 	--v-underlay: rgba(0,0,0,0.2);
 	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
 	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer, .v-bottom-sheet, .banner {
+	.v-navigation-drawer, .v-bottom-sheet, .v-bottom-navigation,
+	.v-btn.translucent, .banner {
 		background-color: rgba(40,40,40,0.75) !important;
 	}
 }
@@ -216,7 +225,8 @@ img {
 	--v-underlay: rgba(0,0,0,0.05);
 	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
 	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer, .v-bottom-sheet, .banner {
+	.v-navigation-drawer, .v-bottom-sheet, .v-bottom-navigation,
+	.v-btn.translucent, .banner {
 		background-color: rgba(230,240,255,0.65) !important;
 	}
 }

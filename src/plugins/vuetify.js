@@ -21,19 +21,19 @@ export default new Vuetify({
 				primary: '#43b3ae',
 				secondary: '#779ecb',
 				accent: '#9370db',
-				error: '#ea3c53',
-				info: '#9bddff',
-				success: '#77dd77',
-				warning: '#fcf75e'
+				error: '#ff4040',
+				info: '#1e90ff',
+				success: '#3cd070',
+				warning: '#ffcc33'
 			},
 			dark: {
 				primary: '#43b3ae',
 				secondary: '#779ecb',
 				accent: '#9370db',
-				error: '#ea3c53',
-				info: '#9bddff',
-				success: '#77dd77',
-				warning: '#fcf75e'
+				error: '#ff4040',
+				info: '#1e90ff',
+				success: '#3cd070',
+				warning: '#ffcc33'
 			}
 		}
 	}

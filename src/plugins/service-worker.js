@@ -1,7 +1,7 @@
-workbox.core.setCacheNameDetails({prefix: 'placeholder'})
-self.__precacheManifest = [].concat(self.__precacheManifest || [])
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
+import { precacheAndRoute } from 'workbox-precaching'
 
-self.addEventListener('install', function(e) {
+precacheAndRoute(self.__WB_MANIFEST)
+
+self.addEventListener('install', function (event) {
 	self.skipWaiting()
 })
