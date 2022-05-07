@@ -5,9 +5,16 @@ import VueRouter from 'vue-router'
 
 import home from './views/home.vue'
 
+const login = () => import(/* webpackPrefetch: true */ "./views/login.vue")
+
 Vue.use(VueRouter)
 
 const routes = [
+	{
+		path: '/login',
+		name: 'Login',
+		component: login
+	},
 	{
 		path: '*',
 		name: 'Home',
@@ -21,7 +28,7 @@ const router = new VueRouter({
 	routes
 })
 
-/* router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
 	const ifAuth = to.matched.some(record => record.meta.ifAuth)
 	const elseAuth = to.matched.some(record => record.meta.elseAuth)
 	if (ifAuth && !Vue.$auth.authenticated) {
@@ -31,6 +38,15 @@ const router = new VueRouter({
 	} else {
 		next()
 	}
-}) */
+})
+
+if (process.env.NODE_ENV == 'production') {
+	Vue.use(VueGtag, {
+		appName: 'placeholder',
+		pageTrackerScreenviewEnabled: true,
+		pageTrackerExcludedRotues: ['/privacy-policy'],
+		config: { id: process.env.VUE_APP_GANALYTICS_ID }
+	}, router)
+}
 
 export default router

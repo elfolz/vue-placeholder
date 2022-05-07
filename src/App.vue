@@ -99,6 +99,9 @@ export default {
 html, body {
 	overflow: hidden !important;
 }
+textarea {
+	resize: none;
+}
 img {
 	-webkit-user-drag: none;
 	user-drag: none;
@@ -154,6 +157,20 @@ img {
 }
 .v-card, .v-sheet.v-snack__wrapper {
 	border-radius: 8px !important;
+}
+.v-carousel {
+	border-radius: 12px;
+	.v-window__container {
+		height: 100%;
+		.v-image {
+			height: 100% !important;
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
 }
 .v-btn--fixed {
 	&.v-btn--top {

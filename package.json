@@ -8,8 +8,10 @@
 	},
 	"dependencies": {
 		"core-js": "^3.22.4",
+		"firebase": "^9.8.0",
 		"register-service-worker": "^1.7.2",
 		"vue": "^2.6.14",
+		"vue-gtag": "^1.16.1",
 		"vue-router": "^3.5.3",
 		"vuetify": "^2.6.5",
 		"vuex": "^3.6.2"

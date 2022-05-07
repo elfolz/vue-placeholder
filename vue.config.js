@@ -1,3 +1,5 @@
+const { name } = require('./package.json')
+
 module.exports = {
 	transpileDependencies: true,
 	productionSourceMap: false,
@@ -12,7 +14,7 @@ module.exports = {
 		}
 	},
 	pwa: {
-		name: 'Placeholder',
+		name: name,
 		themeColor: '#000',
 		appleMobileWebAppCapable: 'yes',
 		appleMobileWebAppStatusBarStyle: 'black-translucent',

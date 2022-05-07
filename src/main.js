@@ -7,6 +7,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import './plugins/register-service-worker'
 import './plugins/axios'
+import './plugins/auth'
 
 Vue.config.productionTip = false
 

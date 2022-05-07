@@ -8,18 +8,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		updateAvailable: false,
+		authenticated: localStorage.getItem('accessToken') ? true : false,
 		alert: false,
 		alertData: {}
 	},
 	mutations: {
 		setUpdateAvailable(state, value) {
-			state.updateAvailable = value;
+			state.updateAvailable = value
+		},
+		setAuthenticate(state, value) {
+			state.authenticated = value
 		},
 		setAlert(state, data) {
 			state.alert = data;
 		},
 		setAlertData(state, data) {
-			state.alertData = data;
+			state.alertData = data
 		}
 	},
 	actions: {
