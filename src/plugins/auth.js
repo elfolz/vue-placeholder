@@ -17,12 +17,10 @@ class Auth {
 	}
 
 	authenticate(data) {
-		localStorage.setItem('accessToken', data.token)
-		delete data.token
+		localStorage.setItem('accessToken', data.accessToken)
 		localStorage.setItem('user', JSON.stringify(data.user))
 		window.Vue.$store.commit('setAuthenticate', true)
 		window.Vue.$router.push('/').catch(e=>{})
-		window.Vue.$sync.syncTrainings()
 	}
 
 	deauthenticate() {
@@ -30,7 +28,6 @@ class Auth {
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
 		window.Vue.$router.push('/').catch(e=>{})
-		window.Vue.$sync.unlinkTrainings()
 	}
 
 	get user() {

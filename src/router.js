@@ -11,9 +11,12 @@ Vue.use(VueRouter)
 
 const routes = [
 	{
-		path: '/login',
+		path: '/login/:provider?',
 		name: 'Login',
-		component: login
+		component: login,
+		meta: {
+			elseAuth: true
+		}
 	},
 	{
 		path: '*',

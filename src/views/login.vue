@@ -9,7 +9,7 @@
 		<template v-else>
 			<figure>
 				<img src="/img/icons/android-chrome-192x192.png" :alt="appName">
-				<figcaption>{{appName}}</figcaption>
+				<figcaption><h1>{{appName}}</h1></figcaption>
 			</figure>
 			<footer>Entre com uma de suas redes sociais</footer>
 			<v-btn fab v-for="(p, i) in providers" :key="i" :class="p" @click="requestLogin(p)"><img :src="`/img/social/${p}.svg`" :alt="p"></v-btn>
@@ -37,7 +37,7 @@ export default {
 	},
 	methods: {
 		requestLogin(provider) {
-			this.$router.push({params: {provider}})
+			this.$router.push({params: {provider}}).catch(e=>{})
 			if (provider == 'google') provider = new GoogleAuthProvider()
 			if (provider == 'facebook') provider = new FacebookAuthProvider()
 			if (provider == 'twitter') provider = new TwitterAuthProvider()
@@ -50,9 +50,9 @@ export default {
 			firebase.auth().setPersistence('none')
 			.finally(() => {
 				return firebase.auth().getRedirectResult()
-				.then((result) => {
+				.then(result => {
 					if (!result.credential) {
-						this.$router.push('/login')
+						this.$router.push('/login').catch(e=>{})
 						return this.$store.dispatch('openAlert', {text: 'Falha ao fazer o login. Tente novamente', color: 'error'})
 					}
 					let data = {
@@ -61,13 +61,13 @@ export default {
 						provider: result.credential.providerId.replace('.com', ''),
 						email: result.user.providerData[0].email
 					}
-					return this.axios.post(`/auth/login`, data)
+					return this.axios.post(`/auth`, data)
 					.then(response => {
 						this.$auth.authenticate(response.data)
 					})
 				})
 				.catch(error => {
-					//console.log(error)
+					console.log(error)
 					this.$store.dispatch('openAlert', {text: 'Falha ao fazer o login. Tente novamente', color: 'error'})
 				})
 			})
@@ -95,8 +95,9 @@ main {
 			width: 96px;
 		}
 		figcaption {
-			font-family: 'Orbitron', 'Roboto', sans-serif;
-			font-size: 1.5rem;
+			h1 {
+				font-size: 1.5rem;
+			}
 		}
 	}
 	footer {
