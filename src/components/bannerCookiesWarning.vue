@@ -2,7 +2,7 @@
 	<transition name="fade">
 		<footer v-if="show" class="banner elevation-12">
 			<p>Usamos cookies para melhorar sua experiência.</p>
-			<p>Saiba mais em&nbsp;<font @click="$router.push('/privacy-policy')">{{link()}}</font></p>
+			<p>Saiba mais em&nbsp;<font @click="$router.push('/privacy-policy').catch(e=>{})">{{link()}}</font></p>
 			<v-btn color="accent" @click="accept"><v-icon>check</v-icon>Aceitar</v-btn>
 		</footer>
 	</transition>
@@ -22,7 +22,7 @@ export default {
 			this.show = false
 		},
 		link() {
-			return `${location.host}/privacy-policy`
+			return `${location.host}/#/privacy-policy`
 		}
 	}
 }

@@ -134,20 +134,20 @@ img {
 	border-radius: 6px !important;
 	&.flat {
 		padding: 0 !important;
+		.v-list-item {
+			padding: 0 6px 0 0 !important;
+		}
 	}
 	&.transparent {
 		background: transparent !important;
 	}
 	.v-list-item {
-		.v-list-item__icon {
-			margin-right: 12px !important;
+		.v-list-item__avatar, .v-list-item__action {
+			align-self: center !important;
 		}
 	}
-	.v-list-item__avatar, .v-list-item__action {
-		align-self: center !important;
-	}
 	.v-list-item--link {
-		&:before {
+		&:before, .v-ripple__container {
 			border-radius: 8px;
 		}
 	}

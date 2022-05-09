@@ -5,18 +5,21 @@ import VueRouter from 'vue-router'
 
 import home from './views/home.vue'
 
-const login = () => import(/* webpackPrefetch: true */ "./views/login.vue")
-
 Vue.use(VueRouter)
 
 const routes = [
 	{
 		path: '/login/:provider?',
 		name: 'Login',
-		component: login,
+		component: () => import(/* webpackPrefetch: true */ "./views/login.vue"),
 		meta: {
 			elseAuth: true
 		}
+	},
+	{
+		path: '/privacy-policy',
+		name: 'Privacy Policy',
+		component: () => import(/* webpackPrefetch: true */ "./views/privacy-policy.vue")
 	},
 	{
 		path: '*',
