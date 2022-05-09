@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import './plugins/register-service-worker'
+import './plugins/push-notification'
 import './plugins/axios'
 import './plugins/auth'
 

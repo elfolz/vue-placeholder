@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import device from '../helpers/deviceChecker'
+import device from '../helpers/deviceInfo'
 
 export default {
 	name: 'banner-install-pwa',

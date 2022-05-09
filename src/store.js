@@ -9,10 +9,14 @@ export default new Vuex.Store({
 	state: {
 		updateAvailable: false,
 		authenticated: localStorage.getItem('accessToken') ? true : false,
+		requestNotificationPermission: null,
 		alert: false,
 		alertData: {}
 	},
 	mutations: {
+		setRequestNotificationPermission(state, data) {
+			state.requestNotificationPermission = data
+		},
 		setUpdateAvailable(state, value) {
 			state.updateAvailable = value
 		},

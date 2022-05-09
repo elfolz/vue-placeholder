@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import device from './helpers/deviceChecker'
+import device from './helpers/deviceInfo'
 import bannerInstallPwa from './components/bannerInstallPwa'
 import bannerCookiesWarning from './components/bannerCookiesWarning.vue'
 
@@ -55,8 +55,10 @@ export default {
 		}
 	},
 	mounted() {
+		this.refreshPageSize()
 		window.onresize = () => {
 			this.refreshPageSize()
+			this.$root.$emit('resize')
 		}
 	},
 	methods: {
@@ -65,7 +67,6 @@ export default {
 		},
 		refreshPageSize() {
 			document.body.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
-			this.$root.$emit('resize')
 		}
 	}
 }
@@ -131,10 +132,27 @@ img {
 }
 .v-list {
 	border-radius: 6px !important;
+	&.flat {
+		padding: 0 !important;
+	}
+	&.transparent {
+		background: transparent !important;
+	}
 	.v-list-item {
 		.v-list-item__icon {
 			margin-right: 12px !important;
 		}
+	}
+	.v-list-item__avatar, .v-list-item__action {
+		align-self: center !important;
+	}
+	.v-list-item--link {
+		&:before {
+			border-radius: 8px;
+		}
+	}
+	.v-divider {
+		margin: 0 8px;
 	}
 }
 .v-card {
@@ -196,7 +214,8 @@ img {
 		}
 	}
 }
-.v-card, .v-navigation-drawer, .v-sheet, .v-overlay--active, .v-btn.translucent, .banner {
+.v-card, .v-navigation-drawer, .v-sheet:not(.transparent),
+.v-overlay--active,.v-btn.translucent, .banner {
 	backdrop-filter: blur(10px);
 	> .v-overlay__scrim {
 		backdrop-filter: blur(10px);
@@ -215,6 +234,20 @@ img {
 .v-navigation-drawer__content {
 	padding-top: env(safe-area-inset-top, 0);
 	padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.v-tabs-bar, .v-tabs-items {
+	background-color: unset !important;
+	.v-tab {
+		overflow: hidden;
+	}
+}
+.v-text-field {
+	&.v-text-field--rounded {
+		.v-progress-linear {
+			width: calc(100% - 36px);
+			margin-left: 18px;
+		}
+	}
 }
 .banner {
 	position: fixed;
