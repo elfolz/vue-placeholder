@@ -54,6 +54,7 @@ export default {
 			this.loading = this.$route.params.provider
 			getRedirectResult(auth)
 			.then(result => {
+				if (!result) return
 				let data = {
 					name: result.user.providerData[0].displayName,
 					socialId: result.user.providerData[0].uid,

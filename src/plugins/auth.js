@@ -1,18 +1,16 @@
 'use strict'
 
 import Vue from 'vue'
+import { auth } from './firebase'
+import { signOut } from 'firebase/auth'
 
 class Auth {
 
-	get authenticated() {
-		return localStorage.getItem('accessToken') ? true : false
-	}
-
 	attempt() {
-		if (!navigator.onLine) return false
-		Vue.axios.get('/auth/check', {headers: this.headers})
+		if (!navigator.onLine) return
+		Vue.axios.get('/auth', {headers: this.headers})
 		.catch(() => {
-			this.deauthenticate()
+			this.deauthenticate(true)
 		})
 	}
 
@@ -23,11 +21,18 @@ class Auth {
 		window.Vue.$router.push('/').catch(e=>{})
 	}
 
-	deauthenticate() {
+	deauthenticate(localOnly=false) {
+		if (!localOnly) Vue.axios.delete('/auth', {headers: this.headers})
 		window.Vue.$store.commit('setAuthenticate', false)
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
 		window.Vue.$router.push('/').catch(e=>{})
+		window.Vue.$db.chats.clear()
+		signOut(auth)
+	}
+
+	get authenticated() {
+		return localStorage.getItem('accessToken') ? true : false
 	}
 
 	get user() {

@@ -72,13 +72,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-main {
-	section {
-		height: calc(var(--vh) - env(safe-area-inset-top, 0) - env(safe-area-inset-bottom, 0) - 36px - 24px);
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
-}
-</style>

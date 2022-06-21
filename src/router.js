@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import packageInfo from '../package.json'
 
 import home from './views/home.vue'
 
@@ -48,10 +49,10 @@ router.beforeEach((to, from, next) => {
 
 if (process.env.NODE_ENV == 'production') {
 	Vue.use(VueGtag, {
-		appName: 'placeholder',
+		appName: packageInfo.name,
 		pageTrackerScreenviewEnabled: true,
 		pageTrackerExcludedRotues: ['/privacy-policy'],
-		config: { id: process.env.VUE_APP_GANALYTICS_ID }
+		config: { id: process.env.VUE_APP_FIREBASE_ANALYTICS_ID }
 	}, router)
 }
 

@@ -6,13 +6,14 @@ import { getMessaging } from 'firebase/messaging'
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
 
 const firebaseApp = initializeApp({
-	apiKey: "AIzaSyDhfj-0jIAhGoEZYXO-7yhjMY6IuFokdpY",
-	authDomain: "bixinhos-c0a0e.firebaseapp.com",
-	projectId: "bixinhos-c0a0e",
-	storageBucket: "bixinhos-c0a0e.appspot.com",
-	messagingSenderId: "1061607580006",
-	appId: "1:1061607580006:web:503c689d8157d6e5a268a7",
-	measurementId: "G-P58N8X9S8E"
+	databaseURL: process.env.VUE_APP_FIREBASE_DATABASE,
+	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+	authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.VUE_APP_FIREBASE_BUCKET,
+	messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_ID,
+	appId: process.env.VUE_APP_FIREBASE_APP_ID,
+	measurementId: process.env.VUE_APP_FIREBASE_ANALYTICS_ID
 })
 
 const auth = getAuth(firebaseApp)

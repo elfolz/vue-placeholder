@@ -39,5 +39,9 @@ module.exports = {
 		manifestOptions: {
 			background_color: '#ff7e00'
 		}
+	},
+	devServer: {
+		https: true,
+		host: 'localhost'
 	}
 }
