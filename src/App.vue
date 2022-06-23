@@ -97,7 +97,12 @@ export default {
 ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
 	background: transparent;
 }
-html, body {
+html {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	overflow: hidden !important;
 }
 textarea {
@@ -290,6 +295,16 @@ img {
 }
 .fade-enter, .fade-leave-to {
 	opacity: 0;
+}
+@media (prefers-color-scheme: dark) {
+	html {
+		background-color: #121212;
+	}
+}
+@media (prefers-color-scheme: light) {
+	html {
+		background-color: whitesmoke;
+	}
 }
 @media screen and (min-width: 481px) {
 	.banner {
