@@ -1,6 +1,7 @@
 const { name } = require('./package.json')
 
 module.exports = {
+	publicPath: process.env.BASE_URL,
 	transpileDependencies: true,
 	productionSourceMap: false,
 	configureWebpack: {
@@ -39,9 +40,5 @@ module.exports = {
 		manifestOptions: {
 			background_color: '#ff7e00'
 		}
-	},
-	devServer: {
-		https: true,
-		host: 'localhost'
 	}
 }

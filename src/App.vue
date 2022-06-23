@@ -145,6 +145,11 @@ img {
 		.v-list-item__avatar, .v-list-item__action {
 			align-self: center !important;
 		}
+		.v-list-item__icon {
+			.v-icon {
+				color: inherit !important;
+			}
+		}
 	}
 	.v-list-item--link {
 		&:before, .v-ripple__container {
