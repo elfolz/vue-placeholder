@@ -7,7 +7,7 @@ import { signOut } from 'firebase/auth'
 class Auth {
 
 	attempt() {
-		if (!navigator.onLine) return
+		if (!navigator.onLine || !this.authenticated) return
 		Vue.axios.get('/auth', {headers: this.headers})
 		.catch(() => {
 			this.deauthenticate(true)
@@ -27,7 +27,6 @@ class Auth {
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
 		window.Vue.$router.push('/').catch(e=>{})
-		window.Vue.$db.chats.clear()
 		signOut(auth)
 	}
 
@@ -41,7 +40,7 @@ class Auth {
 
 	get headers() {
 		let headers = {}
-		if (localStorage.getItem('accessToken')) headers["Authorization"] = `Bearer ${localStorage.getItem('accessToken')}`
+		if (localStorage.getItem('accessToken')) headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`
 		return headers
 	}
 

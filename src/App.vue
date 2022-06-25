@@ -54,6 +54,9 @@ export default {
 			return this.$store.state.alertData
 		}
 	},
+	created() {
+		this.$auth.attempt()
+	},
 	mounted() {
 		this.refreshPageSize()
 		window.onresize = () => {
@@ -200,12 +203,17 @@ img {
 		}
 	}
 }
-.v-btn--fixed {
-	&.v-btn--top {
-		top: calc(env(safe-area-inset-top, 0) + 12px) !important;
+.v-btn {
+	&.theme--light {
+		color: rgba(0,0,0,0.87) !important;
 	}
-	&.v-btn--bottom {
-		bottom: calc(env(safe-area-inset-bottom, 0) + 12px) !important;
+	&.v-btn--fixed {
+		&.v-btn--top {
+			top: calc(env(safe-area-inset-top, 0) + 12px) !important;
+		}
+		&.v-btn--bottom {
+			bottom: calc(env(safe-area-inset-bottom, 0) + 12px) !important;
+		}
 	}
 }
 .v-snack {
