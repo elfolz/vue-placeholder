@@ -267,6 +267,9 @@ img {
 		}
 	}
 }
+.v-menu__content {
+	border-radius: 6px !important;
+}
 .banner {
 	position: fixed;
 	display: block;

@@ -1,22 +1,19 @@
 <template>
 	<main>
-		<header>
-			<v-btn icon @click="$router.push('/')"><v-icon>arrow_back</v-icon></v-btn>
-		</header>
 		<section>
 			<template v-if="loading">
 				<figure>
-					<img :src="`/img/social/${loading}-color.svg`" alt="Rede social">
+					<img :src="`${baseUrl}img/social/${loading}-color.svg`" alt="Rede social">
 					<v-skeleton-loader type="list-item-avatar-three-line"/>
 				</figure>
 			</template>
 			<template v-else>
 				<figure>
-					<img src="/img/icons/android-chrome-192x192.png" :alt="appName">
+					<img :src="`${baseUrl}img/icons/android-chrome-192x192.png`" :alt="appName">
 					<figcaption><h1>{{appName}}</h1></figcaption>
 				</figure>
 				<footer>Entre com uma de suas redes sociais</footer>
-				<v-btn fab v-for="(p, i) in providers" :key="i" :class="p" @click="requestLogin(p)"><img :src="`/img/social/${p}.svg`" :alt="p"></v-btn>
+				<v-btn fab v-for="(p, i) in providers" :key="i" :class="p" @click="requestLogin(p)"><img :src="`${baseUrl}img/social/${p}.svg`" :alt="p"></v-btn>
 			</template>
 		</section>
 	</main>
@@ -28,6 +25,11 @@ import { auth } from "../plugins/firebase"
 import { signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth"
 
 export default {
+	computed: {
+		baseUrl() {
+			return process.env.BASE_URL
+		}
+	},
 	data() {
 		return {
 			appName: packageInfo.name,
