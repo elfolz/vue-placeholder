@@ -266,6 +266,9 @@ img {
 			margin-left: 18px;
 		}
 	}
+	.v-input__append-inner {
+		margin-right: 2px;
+	}
 }
 .v-menu__content {
 	border-radius: 6px !important;
