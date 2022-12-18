@@ -14,11 +14,11 @@ class Auth {
 		})
 	}
 
-	authenticate(data) {
+	authenticate(data, goto='/') {
 		localStorage.setItem('accessToken', data.accessToken)
 		localStorage.setItem('user', JSON.stringify(data.user))
 		window.Vue.$store.commit('setAuthenticate', true)
-		window.Vue.$router.push('/').catch(e=>{})
+		window.Vue.$router.push(goto ?? '/').catch(e=>{})
 	}
 
 	deauthenticate(localOnly=false) {
@@ -26,7 +26,7 @@ class Auth {
 		window.Vue.$store.commit('setAuthenticate', false)
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
-		window.Vue.$router.push('/').catch(e=>{})
+		window.Vue.$router.push('/login').catch(e=>{})
 		signOut(auth)
 	}
 

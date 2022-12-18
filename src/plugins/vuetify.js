@@ -1,9 +1,11 @@
 'use strict'
 
 import Vue from 'vue'
+import VueTheMask from 'vue-the-mask'
 import Vuetify from 'vuetify/lib/framework'
 
 Vue.use(Vuetify)
+Vue.use(VueTheMask)
 
 let lt = localStorage.getItem('lightTheme')
 

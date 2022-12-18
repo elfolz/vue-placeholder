@@ -22,7 +22,7 @@
 <script>
 import packageInfo from '../../package.json'
 import { auth } from "../plugins/firebase"
-import { signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth"
+import { signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth"
 
 export default {
 	computed: {
@@ -32,7 +32,7 @@ export default {
 	},
 	data() {
 		return {
-			appName: packageInfo.name,
+			appName: packageInfo.name.replace(/-/, ' '),
 			loading: null,
 			providers: [
 				'google', 'facebook', 'microsoft', 'twitter'
@@ -50,7 +50,15 @@ export default {
 			if (provider == 'facebook') provider = new FacebookAuthProvider()
 			if (provider == 'microsoft') provider = new OAuthProvider("microsoft.com")
 			if (provider == 'twitter') provider = new TwitterAuthProvider()
-			signInWithRedirect(auth, provider)
+			signInWithPopup(auth, provider)
+			.then(result => {
+				if (!result) return
+				this.saveLoginData(result)
+				this.loading = null
+			})
+			.catch(error => {
+				signInWithRedirect(auth, provider)
+			})
 		},
 		executeLogin() {
 			this.loading = this.$route.params.provider
@@ -75,6 +83,13 @@ export default {
 			.finally(() => {
 				this.loading = null
 			})
+		},
+		saveLoginData(result) {
+			let user = result.user.providerData[0]
+			user.socialId = user.uid
+			user.firebaseId = result.user.uid
+			this.$auth.authenticate(user, localStorage.getItem('pendingPath'))
+			localStorage.removeItem('pendingPath')
 		}
 	}
 }

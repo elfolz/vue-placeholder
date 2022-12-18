@@ -1,6 +1,7 @@
 'use strict'
 
 import Vue from 'vue'
+import VueGtag from 'vue-gtag'
 import VueRouter from 'vue-router'
 import packageInfo from '../package.json'
 
@@ -38,18 +39,14 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	const ifAuth = to.matched.some(record => record.meta.ifAuth)
 	const elseAuth = to.matched.some(record => record.meta.elseAuth)
-	if (ifAuth && !Vue.$auth.authenticated) {
-		next('/login')
-	} else if (elseAuth && Vue.$auth.authenticated) {
-		next('/')
-	} else {
-		next()
-	}
+	if (ifAuth && !Vue.$auth.authenticated) next('/login')
+	else if (elseAuth && Vue.$auth.authenticated) next('/')
+	else next()
 })
 
-if (process.env.NODE_ENV == 'production') {
+if (process.env.VUE_APP_FIREBASE_ANALYTICS_ID && process.env.NODE_ENV == 'production') {
 	Vue.use(VueGtag, {
-		appName: packageInfo.name,
+		appName: packageInfo.name.replace(/-/, ' '),
 		pageTrackerScreenviewEnabled: true,
 		pageTrackerExcludedRotues: ['/privacy-policy'],
 		config: { id: process.env.VUE_APP_FIREBASE_ANALYTICS_ID }

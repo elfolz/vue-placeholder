@@ -240,7 +240,17 @@ img {
 	}
 }
 .v-skeleton-loader {
-	width: 100%;
+	&.centered {
+		position: fixed !important;
+		top: 50%;
+		left: 50%;
+		width: calc(100vw - 24px);
+		max-width: 480px;
+		transform: translate(-50%, -50%);
+	}
+	&:not(.centered) {
+		width: 100%;
+	}
 	> :first-child {
 		background: none !important;
 	}
