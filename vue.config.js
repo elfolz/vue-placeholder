@@ -1,7 +1,7 @@
 const { name } = require('./package.json')
 
 module.exports = {
-	publicPath: process.env.BASE_URL,
+	publicPath: process.env.BASE_URL ?? '/',
 	transpileDependencies: true,
 	productionSourceMap: false,
 	configureWebpack: {
@@ -23,6 +23,7 @@ module.exports = {
 		workboxOptions: {
 			swSrc: './src/plugins/service-worker.js',
 			exclude: [
+				/.*\.apk$/gi,
 				/.*\.json$/gi,
 				/\.nojekyll/gi,
 				/robots\.txt/gi,

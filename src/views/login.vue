@@ -22,7 +22,7 @@
 <script>
 import packageInfo from '../../package.json'
 import { auth } from "../plugins/firebase"
-import { signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth"
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth"
 
 export default {
 	computed: {
@@ -39,9 +39,6 @@ export default {
 			]
 		}
 	},
-	mounted() {
-		if (this.$route.params.provider) this.executeLogin()
-	},
 	methods: {
 		requestLogin(provider) {
 			this.loading = provider
@@ -53,43 +50,17 @@ export default {
 			signInWithPopup(auth, provider)
 			.then(result => {
 				if (!result) return
-				this.saveLoginData(result)
+				let user = result.user.providerData[0]
+				user.socialId = user.uid
+				user.firebaseId = result.user.uid
+				delete user.uid
+				this.$auth.authenticate(user, localStorage.getItem('pendingPath'))
+				localStorage.removeItem('pendingPath')
 				this.loading = null
 			})
 			.catch(error => {
-				signInWithRedirect(auth, provider)
-			})
-		},
-		executeLogin() {
-			this.loading = this.$route.params.provider
-			getRedirectResult(auth)
-			.then(result => {
-				if (!result) return
-				let data = {
-					name: result.user.providerData[0].displayName,
-					socialId: result.user.providerData[0].uid,
-					provider: result.providerId.replace('.com', ''),
-					email: result.user.providerData[0].email
-				}
-				return this.axios.post(`/auth`, data)
-				.then(response => {
-					this.$auth.authenticate(response.data)
-				})
-			})
-			.catch(error => {
-				console.log(error)
 				this.$store.dispatch('openAlert', {text: 'Falha ao fazer o login. Tente novamente', color: 'error'})
 			})
-			.finally(() => {
-				this.loading = null
-			})
-		},
-		saveLoginData(result) {
-			let user = result.user.providerData[0]
-			user.socialId = user.uid
-			user.firebaseId = result.user.uid
-			this.$auth.authenticate(user, localStorage.getItem('pendingPath'))
-			localStorage.removeItem('pendingPath')
 		}
 	}
 }

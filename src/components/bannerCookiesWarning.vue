@@ -22,7 +22,7 @@ export default {
 			this.show = false
 		},
 		link() {
-			return `${location.host}/#/privacy-policy`
+			return `${location.host}${location.pathname}#/privacy-policy`
 		}
 	}
 }
