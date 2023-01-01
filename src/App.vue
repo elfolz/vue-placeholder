@@ -69,7 +69,7 @@ export default {
 			location.reload(true)
 		},
 		refreshPageSize() {
-			document.body.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
+			document.documentElement.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
 		}
 	}
 }
@@ -81,9 +81,6 @@ export default {
 }
 *:focus {
 	outline: none;
-}
-:root {
-	--vh: 100vh;
 }
 ::-webkit-scrollbar {
 	width: 8px;

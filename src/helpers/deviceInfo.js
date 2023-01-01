@@ -2,7 +2,7 @@ export default () => {
 
 	var name
 	const userAgent = window.navigator.userAgent.toLowerCase()
-	const standalone = navigator.standalone ?? window.matchMedia('(display-mode: standalone)').matches
+	const standalone = navigator.standalone || window.matchMedia('(display-mode: standalone)').matches
 
 	if (/windows/i.test(userAgent)) {
 		name = 'windows'
