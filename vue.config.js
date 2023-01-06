@@ -16,7 +16,7 @@ module.exports = {
 	},
 	pwa: {
 		name: name,
-		themeColor: '#000',
+		themeColor: '#00ffbb',
 		appleMobileWebAppCapable: 'yes',
 		appleMobileWebAppStatusBarStyle: 'black-translucent',
 		workboxPluginMode: 'InjectManifest',
@@ -39,7 +39,7 @@ module.exports = {
 			msTileImage: null,
 		},
 		manifestOptions: {
-			background_color: '#ff7e00'
+			background_color: '#00ffbb'
 		}
 	}
 }
