@@ -33,7 +33,8 @@ class PushNotification {
 			})
 			.then(fcmToken => {
 				window.Vue.$store.commit('setRequestNotificationPermission', false)
-				this.sendToServer({fcmToken: fcmToken})
+				if (localStorage.getItem('fcmToken') != fcmToken) this.sendToServer({fcmToken: fcmToken})
+				localStorage.setItem('fcmToken', fcmToken)
 			})
 		})
 		.catch(error => {

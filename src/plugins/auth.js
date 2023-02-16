@@ -12,6 +12,7 @@ class Auth {
 		.catch(() => {
 			this.deauthenticate(true)
 		})
+		Vue.$pushNotification.checkPermission()
 	}
 
 	authenticate(data, goto='/') {
@@ -19,6 +20,7 @@ class Auth {
 		localStorage.setItem('user', JSON.stringify(data.user))
 		window.Vue.$store.commit('setAuthenticate', true)
 		window.Vue.$router.push(goto ?? '/').catch(e=>{})
+		Vue.$pushNotification.checkPermission()
 	}
 
 	deauthenticate(localOnly=false) {
