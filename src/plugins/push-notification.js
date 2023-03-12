@@ -1,18 +1,22 @@
 'use strict'
 
-import Vue from 'vue'
 import { getToken } from 'firebase/messaging'
 import { messaging } from './firebase'
 
 class PushNotification {
+
+	constructor(app) {
+		this.app = app
+	}
 
 	checkPermission() {
 		navigator.permissions.query({name: 'notifications'})
 		.then(response => {
 			if (response.state == 'granted') {
 				this.getFcmToken()
-			} else if (response.state != 'denied') {
-				window.Vue.$store.commit('setRequestNotificationPermission', true)
+			} else if (response.state == 'prompt') {
+				this.vue.$store.commit('setRequestNotificationPermission', true)
+				this.vue.$store.dispatch('refreshShowPromo')
 			}
 		})
 	}
@@ -21,6 +25,9 @@ class PushNotification {
 		Notification.requestPermission()
 		.then(response => {
 			if (response == 'granted') this.getFcmToken()
+		})
+		.catch(e => {
+			this.vue.$store.commit('setRequestNotificationPermission', false)
 		})
 	}
 
@@ -32,9 +39,10 @@ class PushNotification {
 				serviceWorkerRegistration: registration
 			})
 			.then(fcmToken => {
-				window.Vue.$store.commit('setRequestNotificationPermission', false)
 				if (localStorage.getItem('fcmToken') != fcmToken) this.sendToServer({fcmToken: fcmToken})
 				localStorage.setItem('fcmToken', fcmToken)
+				this.vue.$store.dispatch('refreshShowPromo')
+				this.vue.$store.commit('setRequestNotificationPermission', false)
 			})
 		})
 		.catch(error => {
@@ -43,20 +51,18 @@ class PushNotification {
 	}
 
 	sendToServer(data) {
-		Vue.axios.put('/auth/notification', data, {headers: Vue.$auth.headers})
+		this.vue.axios.put('/auth/notification', data, {headers: this.vue.$auth.headers})
+	}
+
+	get vue() {
+		return this.app.config.globalProperties
 	}
 
 }
 
-const _pushNotification = new PushNotification()
-
-PushNotification.install = function (Vue, options) {
-	Vue.$pushNotification = _pushNotification
-	Object.defineProperty(Vue.prototype, '$pushNotification', {
-		get() { return _pushNotification }
-	})
+export default {
+	install: (app, options) => {
+		const _pushNotification = new PushNotification(app)
+		app.config.globalProperties.$pushNotification = _pushNotification
+	}
 }
-
-Vue.use(PushNotification)
-
-export default PushNotification

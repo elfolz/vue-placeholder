@@ -3,11 +3,11 @@
 		<main v-if="show" @click="show=false" class="banner elevation-12">
 			<header>Instale esse App no seu ceular</header>
 			<template v-if="device.name == 'ios'">
-				<div> Toque em <v-icon>ios_share</v-icon> e depois em </div>
+				<div> Toque em <v-icon icon="ios_share" /> e depois em </div>
 				<div class="ios"> Adicionar à Tela de Início <span></span> </div>
 			</template>
 			<template v-if="device.name == 'android'">
-				<div> Toque em <v-icon>more_vert</v-icon>e depois em </div>
+				<div> Toque em <v-icon icon="more_vert" />e depois em </div>
 				<div>Adicionar à tela inicial</div>
 			</template>
 		</main>
@@ -42,7 +42,7 @@ export default {
 <style lang="scss" scoped>
 main {
 	header {
-		color: var(--v-primary-base);
+		color: rgb(var(--v-theme-primary));
 	}
 	div {
 		&:not(:first-of-type) {

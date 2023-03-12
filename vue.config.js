@@ -10,7 +10,7 @@ module.exports = {
 		},
 		optimization: {
 			splitChunks: {
-				maxSize: 200000
+				maxSize: 500000
 			}
 		}
 	},
@@ -39,6 +39,7 @@ module.exports = {
 			msTileImage: null,
 		},
 		manifestOptions: {
+			orientation: 'portrait',
 			background_color: '#00ffbb'
 		}
 	}

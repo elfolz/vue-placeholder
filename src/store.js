@@ -1,15 +1,12 @@
 'use strict'
 
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
 	state: {
-		updateAvailable: false,
 		authenticated: localStorage.getItem('accessToken') ? true : false,
 		requestNotificationPermission: null,
+		updateAvailable: false,
 		alert: false,
 		alertData: {}
 	},
@@ -28,6 +25,9 @@ export default new Vuex.Store({
 		},
 		setAlertData(state, data) {
 			state.alertData = data
+		},
+		setWindowResized(state, value) {
+			state.windowResized = value
 		}
 	},
 	actions: {
@@ -36,6 +36,11 @@ export default new Vuex.Store({
 			commit('setAlertData', data)
 			commit('setAlert', true)
 			try { navigator.vibrate(100) } catch (e) { }
+		},
+		setWindowResized({ commit }, value) {
+			commit('setWindowResized', value)
+			if (!value) return
+			setTimeout(() => {commit('setWindowResized', false)}, 250)
 		}
 	}
 })

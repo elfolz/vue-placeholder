@@ -1,34 +1,37 @@
 'use strict'
 
-import Vue from 'vue'
 import { auth } from './firebase'
 import { signOut } from 'firebase/auth'
 
 class Auth {
 
+	constructor(app) {
+		this.app = app
+	}
+
 	attempt() {
 		if (!navigator.onLine || !this.authenticated) return
-		Vue.axios.get('/auth', {headers: this.headers})
+		this.vue.axios.get('/auth', {headers: this.headers})
 		.catch(() => {
 			this.deauthenticate(true)
 		})
-		Vue.$pushNotification.checkPermission()
+		this.vue.$pushNotification.checkPermission()
 	}
 
 	authenticate(data, goto='/') {
 		localStorage.setItem('accessToken', data.accessToken)
 		localStorage.setItem('user', JSON.stringify(data.user))
-		window.Vue.$store.commit('setAuthenticate', true)
-		window.Vue.$router.push(goto ?? '/').catch(e=>{})
-		Vue.$pushNotification.checkPermission()
+		this.vue.$store.commit('setAuthenticate', true)
+		this.vue.$router.push(goto ?? '/').catch(e=>{})
+		this.vue.$pushNotification.checkPermission()
 	}
 
 	deauthenticate(localOnly=false) {
-		if (!localOnly) Vue.axios.delete('/auth', {headers: this.headers})
-		window.Vue.$store.commit('setAuthenticate', false)
+		if (!localOnly) this.vue.axios.delete('/auth', {headers: this.headers})
+		this.vue.$store.commit('setAuthenticate', false)
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
-		window.Vue.$router.push('/login').catch(e=>{})
+		this.vue.$router.push('/login').catch(e=>{})
 		signOut(auth)
 	}
 
@@ -46,17 +49,15 @@ class Auth {
 		return headers
 	}
 
+	get vue() {
+		return this.app.config.globalProperties
+	}
+
 }
 
-const _auth = new Auth()
-
-Auth.install = function (Vue, options) {
-	Vue.$auth = _auth
-	Object.defineProperty(Vue.prototype, '$auth', {
-		get() { return _auth }
-	})
+export default {
+	install: (app, options) => {
+		const _auth = new Auth(app)
+		app.config.globalProperties.$auth = _auth
+	}
 }
-
-Vue.use(Auth)
-
-export default Auth

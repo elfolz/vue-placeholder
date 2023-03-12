@@ -23,6 +23,7 @@ export default {
 	},
 	methods: {
 		requestNotificationPermission() {
+			this.$store.commit('setRequestNotificationPermission', false)
 			this.$pushNotification.requestPermission()
 		}
 	}

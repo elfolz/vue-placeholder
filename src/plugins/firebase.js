@@ -1,4 +1,4 @@
-'use strict'
+/* 'use strict'
 
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -27,4 +27,4 @@ if (process.env.NODE_ENV == 'development') {
 	firestore = getFirestore(firebaseApp)
 }
 
-export {auth, messaging, firestore}
+export {auth, messaging, firestore} */

@@ -2,11 +2,11 @@
 	<v-bottom-sheet v-model="show" content-class="dialog-confirm">
 		<p v-html="message"></p>
 		<footer>
-			<v-btn text @click="cancel">
-				<v-icon>clear</v-icon>&nbsp;Não
+			<v-btn text @click="cancel()">
+				<v-icon icon="clear" />&nbsp;Não
 			</v-btn>
-			<v-btn text @click="confirm">
-				<v-icon>check</v-icon>&nbsp;Sim
+			<v-btn text @click="confirm()">
+				<v-icon icon="check" />&nbsp;Sim
 			</v-btn>
 		</footer>
 	</v-bottom-sheet>

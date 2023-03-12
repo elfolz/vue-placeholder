@@ -2,8 +2,8 @@
 	<transition name="fade">
 		<footer v-if="show" class="banner elevation-12">
 			<p>Usamos cookies para melhorar sua experiência.</p>
-			<p>Saiba mais em&nbsp;<font @click="$router.push('/privacy-policy').catch(e=>{})">{{link()}}</font></p>
-			<v-btn color="accent" @click="accept"><v-icon>check</v-icon>Aceitar</v-btn>
+			<p>Saiba mais em&nbsp;<span @click="$router.push('/privacy-policy').catch(e=>{})">{{link()}}</span></p>
+			<v-btn color="accent" @click="accept"><v-icon icon="check" />Aceitar</v-btn>
 		</footer>
 	</transition>
 </template>
@@ -35,9 +35,9 @@ footer {
 	p {
 		margin: 0 0 .5rem 0;
 	}
-	font {
+	span {
 		cursor: pointer;
-		color: var(--v-primary-base);
+		color: rgb(var(--v-theme-primary));
 	}
 }
 </style>

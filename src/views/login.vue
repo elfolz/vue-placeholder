@@ -4,7 +4,7 @@
 			<template v-if="loading">
 				<figure>
 					<img :src="`${baseUrl}img/social/${loading}-color.svg`" alt="Rede social">
-					<v-skeleton-loader type="list-item-avatar-three-line"/>
+					<v-progress-circular indeterminate :size="56" color="primary" />
 				</figure>
 			</template>
 			<template v-else>
@@ -13,7 +13,7 @@
 					<figcaption><h1>{{appName}}</h1></figcaption>
 				</figure>
 				<footer>Entre com uma de suas redes sociais</footer>
-				<v-btn fab v-for="(p, i) in providers" :key="i" :class="p" @click="requestLogin(p)"><img :src="`${baseUrl}img/social/${p}.svg`" :alt="p"></v-btn>
+				<v-btn icon v-for="(p, i) in providers" :key="i" :class="p" @click="requestLogin(p)"><img :src="`${baseUrl}img/social/${p}.svg`" :alt="p"></v-btn>
 			</template>
 		</section>
 	</main>
@@ -33,10 +33,8 @@ export default {
 	data() {
 		return {
 			appName: packageInfo.name.replace(/-/, ' '),
-			loading: null,
-			providers: [
-				'google', 'facebook', 'microsoft', 'twitter'
-			]
+			providers: ['google', 'facebook', 'microsoft', 'twitter'],
+			loading: null
 		}
 	},
 	methods: {
@@ -91,8 +89,9 @@ section {
 		margin: 24px 0 12px 0;
 	}
 	.v-btn {
-		&.v-btn--fab {
+		&.v-btn--icon {
 			width: 56px;
+			height: 56px;
 			margin: 0 12px;
 			img {
 				width: 28px;

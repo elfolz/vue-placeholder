@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<header>
-			<v-btn icon @click="$router.push('/')"><v-icon>arrow_back</v-icon></v-btn>
+			<v-btn icon variant="text" @click="$router.push('/')"><v-icon icon="arrow_back" /></v-btn>
 			<h1 class="text-center">Privacy Policy</h1>
 		</header>
 		<section>
@@ -72,3 +72,20 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+main {
+	padding: 12px;
+}
+header {
+	display: flex;
+	align-items: center;
+	.v-btn {
+		margin-right: 12px;
+	}
+}
+section {
+	height: calc(var(--vh) - 48px - 24px);
+	overflow-y: auto;
+}
+</style>

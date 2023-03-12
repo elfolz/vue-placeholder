@@ -2,18 +2,22 @@
 	<v-app>
 		<!-- content -->
 		<router-view />
-		<!-- alerts -->
-		<v-snackbar bottom v-model="alert" :light="!$vuetify.theme.dark" :timeout="5000" :color="alertData.color || null" @click.native="alert=false">
-			{{alertData.text}}
-			<template v-slot:action="{ attrs }">
-				<v-btn text icon v-bind="attrs"><v-icon>clear</v-icon></v-btn>
+		<!-- update available -->
+		<v-snackbar v-model="updateAvailable" location="top" close-delay="60000" color="primary" @click="updateApp()">
+			{{$t('alerts.newUpdate')}}
+			<template v-slot:actions>
+				<v-btn text icon>
+					<v-icon icon="cached" />
+				</v-btn>
 			</template>
 		</v-snackbar>
-		<!-- update available -->
-		<v-snackbar top v-model="updateAvailable" :light="!$vuetify.theme.dark" :timeout="10000" color="primary" @click.native="updateApp">
-			Atualização disponível&nbsp;
-			<template v-slot:action="{ attrs }">
-				<v-btn text icon v-bind="attrs"><v-icon>cached</v-icon></v-btn>
+		<!-- general alerts -->
+		<v-snackbar v-model="alert" location="top" close-delay="10000" :color="alertData.color || null" v-bind:class="{'theme--light': alertData.color == 'warning'}" >
+			{{alertData.text}}
+			<template v-slot:actions>
+				<v-btn icon @click="alert=false">
+					<v-icon icon="clear" />
+				</v-btn>
 			</template>
 		</v-snackbar>
 		<!-- install pwa -->
@@ -24,7 +28,6 @@
 </template>
 
 <script>
-import device from './helpers/deviceInfo'
 import bannerInstallPwa from './components/bannerInstallPwa'
 import bannerCookiesWarning from './components/bannerCookiesWarning.vue'
 
@@ -50,26 +53,34 @@ export default {
 				this.$store.commit('setUpdateAvailable', false)
 			}
 		},
+		windowResized: {
+			get() {
+				return this.$store.state.windowResized
+			},
+			set(value) {
+				return this.$store.dispatch("setWindowResized", value)
+			},
+		},
 		alertData: function () {
 			return this.$store.state.alertData
 		}
 	},
 	created() {
 		this.$auth.attempt()
+		window.visualViewport.onresize = () => this.refreshPageSize()
+		window.visualViewport.onscroll = () => setTimeout(() => this.refreshPageSize(), 250)
 	},
 	mounted() {
 		this.refreshPageSize()
-		window.onresize = () => {
-			this.refreshPageSize()
-			this.$root.$emit('resize')
-		}
 	},
 	methods: {
 		updateApp() {
 			location.reload(true)
 		},
 		refreshPageSize() {
-			document.documentElement.style.setProperty('--vh', `${device().standalone ? window.outerHeight : window.innerHeight}px`)
+			document.documentElement.style.setProperty('--vh', `${window.visualViewport.height}px`)
+			this.isMobile = window.innerWidth <= 800
+			this.windowResized = true
 		}
 	}
 }
@@ -116,7 +127,7 @@ img {
 	font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
 	font-weight: 400 !important;
 }
-.v-application--wrap {
+.v-application__wrap {
 	padding-top: env(safe-area-inset-top, 0);
 	padding-bottom: env(safe-area-inset-bottom, 0);
 	height: var(--vh) !important;
@@ -130,13 +141,8 @@ img {
 		padding-top: env(safe-area-inset-top, 0) !important;
 	}
 }
-.v-bottom-navigation {
-	position: fixed !important;
-	padding-bottom: env(safe-area-inset-bottom, 0);
-	z-index: 999;
-}
 .v-list {
-	border-radius: 6px !important;
+	border-radius: 8px !important;
 	&.flat {
 		padding: 0 !important;
 		.v-list-item {
@@ -147,18 +153,14 @@ img {
 		background: transparent !important;
 	}
 	.v-list-item {
-		.v-list-item__avatar, .v-list-item__action {
-			align-self: center !important;
+		border-radius: 8px;
+		&:before {
+			border-radius: 8px !important;
 		}
-		.v-list-item__icon {
-			.v-icon {
-				color: inherit !important;
+		.v-list-item__prepend {
+			> img, .v-icon {
+				margin-right: 12px !important;
 			}
-		}
-	}
-	.v-list-item--link {
-		&:before, .v-ripple__container {
-			border-radius: 8px;
 		}
 	}
 	.v-divider {
@@ -166,13 +168,14 @@ img {
 	}
 }
 .v-card {
-	.v-card__title {
+	border-radius: 8px !important;
+	.v-card-title {
 		padding: 12px !important;
 	}
-	.v-card__text {
+	.v-card-text {
 		padding: 0 12px 12px !important;
 	}
-	.v-card__actions {
+	.v-card-actions {
 		display: flex;
 		justify-content: space-between;
 		padding: 0 12px 12px !important;
@@ -183,8 +186,8 @@ img {
 		}
 	}
 }
-.v-card, .v-sheet.v-snack__wrapper {
-	border-radius: 8px !important;
+.v-avatar {
+	overflow: unset !important;
 }
 .v-carousel {
 	border-radius: 12px;
@@ -201,84 +204,43 @@ img {
 	}
 }
 .v-btn {
-	&.theme--light {
-		color: rgba(0,0,0,0.87) !important;
-	}
-	&.v-btn--fixed {
-		&.v-btn--top {
-			top: calc(env(safe-area-inset-top, 0) + 12px) !important;
-		}
-		&.v-btn--bottom {
-			bottom: calc(env(safe-area-inset-bottom, 0) + 12px) !important;
-		}
+	img {
+		width: 28px;
+		height: 28px;
+		object-fit: cover;
 	}
 }
-.v-snack {
-	&.v-snack--top {
+.v-text-field .v-input__prepend-inner, .v-text-field .v-input__append-inner {
+	align-self: center !important;
+}
+
+.v-snackbar {
+	.v-overlay__content {
 		top: env(safe-area-inset-top, 0) !important;
 	}
-	&.v-snack--bottom {
-		bottom: env(safe-area-inset-bottom, 0) !important;
+	.v-snackbar__wrapper {
+		cursor: pointer;
 	}
-	.v-snack__wrapper {
-		&.warning {
-			color: rgba(0,0,0,0.87) !important;
-			.v-btn {
-				color: rgba(0,0,0,0.87) !important;
-			}
+}
+.banner, .v-bottom-navigation, .v-dialog--active, .v-snack__wrapper, .v-overlay--active:not(.v-snackbar, .v-menu), .v-menu .v-overlay__content {
+	--webkit-backdrop-filter: blur(15px);
+	backdrop-filter: blur(15px);
+}
+.v-tabs {
+	&.no-header {
+		.v-tabs-bar {
+			display: none;
 		}
 	}
-}
-.v-card, .v-navigation-drawer, .v-sheet:not(.transparent),
-.v-overlay--active,.v-btn.translucent, .banner {
-	backdrop-filter: blur(10px);
-	> .v-overlay__scrim {
-		backdrop-filter: blur(10px);
-	}
-}
-.v-skeleton-loader {
-	&.centered {
-		position: fixed !important;
-		top: 50%;
-		left: 50%;
-		width: calc(100vw - 24px);
-		max-width: 480px;
-		transform: translate(-50%, -50%);
-	}
-	&:not(.centered) {
-		width: 100%;
-	}
-	> :first-child {
-		background: none !important;
-	}
-}
-.v-bottom-sheet {
-	border-top-left-radius: 12px !important;
-	border-top-right-radius: 12px !important;
-}
-.v-navigation-drawer__content {
-	padding-top: env(safe-area-inset-top, 0);
-	padding-bottom: env(safe-area-inset-bottom, 0);
-}
-.v-tabs-bar, .v-tabs-items {
+	.v-tabs-bar, .v-tabs-items {
 	background-color: unset !important;
-	.v-tab {
-		overflow: hidden;
-	}
-}
-.v-text-field {
-	&.v-text-field--rounded {
-		.v-progress-linear {
-			width: calc(100% - 36px);
-			margin-left: 18px;
+		.v-tab {
+			overflow: hidden;
 		}
 	}
-	.v-input__append-inner {
-		margin-right: 2px;
+	.v-tabs-items {
+		background-color: transparent !important;
 	}
-}
-.v-menu__content {
-	border-radius: 6px !important;
 }
 .banner {
 	position: fixed;
