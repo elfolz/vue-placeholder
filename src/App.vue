@@ -233,7 +233,7 @@ img {
 		}
 	}
 	.v-tabs-bar, .v-tabs-items {
-	background-color: unset !important;
+		background-color: unset !important;
 		.v-tab {
 			overflow: hidden;
 		}
@@ -252,26 +252,6 @@ img {
 	border-top-right-radius: 12px;
 	padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
 	z-index: 1000;
-}
-.theme--dark {
-	--v-overlay: rgba(255,255,255,0.05);
-	--v-underlay: rgba(0,0,0,0.2);
-	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
-	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer, .v-bottom-sheet, .v-bottom-navigation,
-	.v-btn.translucent, .banner {
-		background-color: rgba(40,40,40,0.75) !important;
-	}
-}
-.theme--light {
-	--v-overlay: rgba(255,255,255,0.25);
-	--v-underlay: rgba(0,0,0,0.05);
-	.v-sheet:not(.transparent):not(.error):not(.success):not(.warning),
-	.v-text-field--solo > .v-input__control > .v-input__slot,
-	.v-navigation-drawer, .v-bottom-sheet, .v-bottom-navigation,
-	.v-btn.translucent, .banner {
-		background-color: rgba(230,240,255,0.65) !important;
-	}
 }
 .fade-enter-active, .fade-leave-active {
 	transition: opacity 500ms ease-in-out;
