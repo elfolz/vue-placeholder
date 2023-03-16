@@ -4,7 +4,7 @@
 		<router-view />
 		<!-- update available -->
 		<v-snackbar v-model="updateAvailable" location="top" close-delay="60000" color="primary" @click="updateApp()">
-			{{$t('alerts.newUpdate')}}
+			Atualização disponível
 			<template v-slot:actions>
 				<v-btn text icon>
 					<v-icon icon="cached" />
@@ -251,6 +251,7 @@ img {
 	border-top-left-radius: 12px;
 	border-top-right-radius: 12px;
 	padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+	background-color: rgba(var(--v-theme-surface), 0.25);
 	z-index: 1000;
 }
 .fade-enter-active, .fade-leave-active {
