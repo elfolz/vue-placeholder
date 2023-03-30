@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<header>
-			<v-btn icon variant="text" @click="$router.push('/')"><v-icon icon="arrow_back" /></v-btn>
+			<v-btn icon variant="text" @click="$router.go(-1)"><v-icon icon="arrow_back" /></v-btn>
 			<h1 class="text-center">Privacy Policy</h1>
 		</header>
 		<section>
