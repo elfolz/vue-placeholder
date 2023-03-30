@@ -260,6 +260,9 @@ img {
 .fade-enter, .fade-leave-to {
 	opacity: 0;
 }
+.firebase-emulator-warning {
+	display: none;
+}
 @media (prefers-color-scheme: dark) {
 	html {
 		background-color: #121212;

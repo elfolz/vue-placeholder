@@ -75,9 +75,10 @@ section {
 	figure {
 		width: 280px;
 		margin: 0 auto;
-		margin-bottom: 12px;
 		img {
 			width: 96px;
+			display: block;
+    	margin: 0 auto 24px;
 		}
 		figcaption {
 			h1 {
