@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 main {
 	padding: 12px;
 }
