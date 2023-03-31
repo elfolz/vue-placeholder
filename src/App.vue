@@ -66,7 +66,7 @@ export default {
 		}
 	},
 	created() {
-		this.$auth.attempt()
+		if (this.$auth.authenticated) this.$auth.attempt()
 		window.visualViewport.onresize = () => this.refreshPageSize()
 		window.visualViewport.onscroll = () => setTimeout(() => this.refreshPageSize(), 250)
 	},
