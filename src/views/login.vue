@@ -54,10 +54,12 @@ export default {
 				delete user.uid
 				this.$auth.authenticate(user, localStorage.getItem('pendingPath'))
 				localStorage.removeItem('pendingPath')
-				this.loading = null
 			})
 			.catch(error => {
 				this.$store.dispatch('openAlert', {text: 'Falha ao fazer o login. Tente novamente', color: 'error'})
+			})
+			.finally(() => {
+				this.loading = null
 			})
 		}
 	}
