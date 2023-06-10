@@ -14,6 +14,13 @@ module.exports = {
 			}
 		}
 	},
+	css: {
+		loaderOptions: {
+			css: {
+				url: false
+			}
+		}
+	},
 	pwa: {
 		name: name,
 		themeColor: '#00ffbb',
