@@ -123,6 +123,11 @@ img {
 	-webkit-user-drag: none;
 	user-drag: none;
 }
+label {
+	&.v-btn {
+		cursor: pointer;
+	}
+}
 .emoji {
 	font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
 	font-weight: 400 !important;
@@ -203,6 +208,12 @@ img {
 		}
 	}
 }
+.v-textarea {
+	.v-field__input {
+		-webkit-mask-image: unset !important;
+		mask-image: unset !important;
+	}
+}
 .v-btn {
 	img {
 		width: 28px;
@@ -213,7 +224,12 @@ img {
 .v-text-field .v-input__prepend-inner, .v-text-field .v-input__append-inner {
 	align-self: center !important;
 }
-
+.v-select__selection {
+	overflow: hidden;
+	.v-select__selection-text {
+		white-space: nowrap;
+	}
+}
 .v-snackbar {
 	.v-overlay__content {
 		top: env(safe-area-inset-top, 0) !important;
