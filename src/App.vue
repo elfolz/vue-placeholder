@@ -12,7 +12,7 @@
 			</template>
 		</v-snackbar>
 		<!-- general alerts -->
-		<v-snackbar v-model="alert" location="top" close-delay="10000" :color="alertData.color || null" v-bind:class="{'theme--light': alertData.color == 'warning'}" >
+		<v-snackbar v-model="alert" close-delay="10000" :color="alertData.color || null" v-bind:class="{'theme--light': alertData.color == 'warning'}" >
 			{{alertData.text}}
 			<template v-slot:actions>
 				<v-btn icon @click="alert=false">
@@ -231,16 +231,16 @@ label {
 	}
 }
 .v-snackbar {
-	.v-overlay__content {
-		top: env(safe-area-inset-top, 0) !important;
-	}
 	.v-snackbar__wrapper {
 		cursor: pointer;
 	}
 }
-.banner, .v-bottom-navigation, .v-dialog--active, .v-snack__wrapper, .v-overlay--active:not(.v-snackbar, .v-menu), .v-menu .v-overlay__content {
+.banner, .v-bottom-navigation, .v-dialog--active, .v-snack__wrapper, .v-menu, .v-overlay__scrim, .v-card--variant-elevated, .v-card--variant-flat {
 	--webkit-backdrop-filter: blur(15px);
 	backdrop-filter: blur(15px);
+}
+.v-card--variant-elevated, .v-card--variant-flat {
+	background: rgba(var(--v-theme-surface), 0.5) !important;
 }
 .v-tabs {
 	&.no-header {

@@ -1,20 +1,25 @@
 <template>
-	<v-bottom-sheet v-model="show" content-class="dialog-confirm">
-		<p v-html="message"></p>
-		<footer>
-			<v-btn text @click="cancel()">
-				<v-icon icon="clear" />&nbsp;Não
-			</v-btn>
-			<v-btn text @click="confirm()">
-				<v-icon icon="check" />&nbsp;Sim
-			</v-btn>
-		</footer>
-	</v-bottom-sheet>
+	<v-dialog v-model="show" content-class="dialog-confirm">
+		<v-card>
+			<v-card-title></v-card-title>
+			<v-card-text v-html="message">
+			</v-card-text>
+			<v-card-actions>
+				<v-btn variant="text" @click="cancel()">
+					<v-icon icon="clear" />&nbsp;Não
+				</v-btn>
+				<v-btn variant="text" @click="confirm()">
+					<v-icon icon="check" />&nbsp;Sim
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script>
 export default {
 	name: 'dialog-confirmation',
+	emits: ['confirm', 'cancel'],
 	data() {
 		return {
 			message: null,
@@ -27,38 +32,13 @@ export default {
 			this.show = true
 		},
 		confirm() {
-			this.$emit('confirm', true)
+			this.$emit('confirm')
 			this.show = false
 		},
 		cancel() {
-			this.$emit('cancel', true)
+			this.$emit('cancel')
 			this.show = false
 		},
 	},
 }
 </script>
-
-<style lang="scss" scoped>
-p {
-	width: unset !important;
-	margin: 12px;
-}
-footer {
-	display: flex;
-	padding: 0 12px 12px;
-	.v-btn {
-		&:last-of-type {
-			margin-left: auto;
-		}
-	}
-}
-</style>
-
-<style lang="scss">
-@media screen and (min-width: 481px) {
-	.dialog-confirm {
-		max-width: fit-content;
-		min-width: 480px !important;
-	}
-}
-</style>
