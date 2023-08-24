@@ -12,7 +12,7 @@
 			</template>
 		</v-snackbar>
 		<!-- general alerts -->
-		<v-snackbar v-model="alert" close-delay="10000" :color="alertData.color || null" v-bind:class="{'theme--light': alertData.color == 'warning'}" >
+		<v-snackbar v-model="alert" close-delay="10000" :color="alertData.color || null" v-bind:class="{'theme--light': alertData.color == 'warning'}" class="bottom">
 			{{alertData.text}}
 			<template v-slot:actions>
 				<v-btn icon @click="alert=false">
@@ -53,34 +53,16 @@ export default {
 				this.$store.commit('setUpdateAvailable', false)
 			}
 		},
-		windowResized: {
-			get() {
-				return this.$store.state.windowResized
-			},
-			set(value) {
-				return this.$store.dispatch("setWindowResized", value)
-			},
-		},
 		alertData: function () {
 			return this.$store.state.alertData
 		}
 	},
 	created() {
 		if (this.$auth.authenticated) this.$auth.attempt()
-		window.visualViewport.onresize = () => this.refreshPageSize()
-		window.visualViewport.onscroll = () => setTimeout(() => this.refreshPageSize(), 250)
-	},
-	mounted() {
-		this.refreshPageSize()
 	},
 	methods: {
 		updateApp() {
 			location.reload(true)
-		},
-		refreshPageSize() {
-			document.documentElement.style.setProperty('--vh', `${window.visualViewport.height}px`)
-			this.isMobile = window.innerWidth <= 800
-			this.windowResized = true
 		}
 	}
 }
@@ -135,8 +117,8 @@ label {
 .v-application__wrap {
 	padding-top: env(safe-area-inset-top, 0);
 	padding-bottom: env(safe-area-inset-bottom, 0);
-	height: var(--vh) !important;
-	min-height: var(--vh) !important;
+	height: 100lvh !important;
+	min-height: 100lvh !important;
 	overflow: auto;
 }
 .v-toolbar {
@@ -231,6 +213,16 @@ label {
 	}
 }
 .v-snackbar {
+	&:not(.bottom) {
+		.v-snackbar__wrapper {
+			top: env(safe-area-inset-top, 0) !important;
+		}
+	}
+	&.bottom {
+		.v-snackbar__wrapper {
+			bottom: env(safe-area-inset-bottom, 0) !important;
+		}
+	}
 	.v-snackbar__wrapper {
 		cursor: pointer;
 	}

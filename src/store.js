@@ -25,9 +25,6 @@ export default createStore({
 		},
 		setAlertData(state, data) {
 			state.alertData = data
-		},
-		setWindowResized(state, value) {
-			state.windowResized = value
 		}
 	},
 	actions: {
@@ -36,11 +33,6 @@ export default createStore({
 			commit('setAlertData', data)
 			commit('setAlert', true)
 			try { navigator.vibrate(100) } catch (e) { }
-		},
-		setWindowResized({ commit }, value) {
-			commit('setWindowResized', value)
-			if (!value) return
-			setTimeout(() => {commit('setWindowResized', false)}, 250)
 		}
 	}
 })

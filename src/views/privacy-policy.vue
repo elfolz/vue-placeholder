@@ -85,7 +85,7 @@ header {
 	}
 }
 section {
-	height: calc(var(--vh) - 48px - 24px);
+	height: calc(100dvh - 48px - 24px);
 	overflow-y: auto;
 }
 </style>
