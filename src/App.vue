@@ -212,6 +212,18 @@ label {
 		white-space: nowrap;
 	}
 }
+.v-skeleton-loader {
+	background: unset !important;
+	.v-skeleton-loader__paragraph, .v-skeleton-loader__list-item-two-line, .v-skeleton-loader__sentences {
+		&:after {
+			display: none;
+		}
+	}
+	.v-skeleton-loader__text {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
 .v-snackbar {
 	&:not(.bottom) {
 		.v-snackbar__wrapper {
