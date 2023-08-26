@@ -51,7 +51,7 @@ class PushNotification {
 	}
 
 	sendToServer(data) {
-		this.vue.axios.put('/auth/notification', data, {headers: this.vue.$auth.headers})
+		fetch(`${process.env.VUE_APP_API_HOST}/auth/notification`, {method: 'put', body: data, headers: this.vue.$auth.headers})
 	}
 
 	get vue() {

@@ -11,9 +11,9 @@ class Auth {
 
 	attempt() {
 		if (!navigator.onLine || !this.authenticated) return
-		this.vue.axios.get('/auth', {headers: this.headers})
-		.catch(() => {
-			this.deauthenticate(true)
+		fetch(`${process.env.VUE_APP_API_HOST}/auth`, {headers: this.headers})
+		.then(response => {
+			if (response.status != 200) this.deauthenticate(true)
 		})
 		this.vue.$pushNotification.checkPermission()
 	}
@@ -27,7 +27,7 @@ class Auth {
 	}
 
 	deauthenticate(localOnly=false) {
-		if (!localOnly) this.vue.axios.delete('/auth', {headers: this.headers})
+		if (!localOnly)fetch(`${process.env.VUE_APP_API_HOST}/auth`, {method: 'delete', headers: this.headers})
 		this.vue.$store.commit('setAuthenticate', false)
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
@@ -44,7 +44,7 @@ class Auth {
 	}
 
 	get headers() {
-		let headers = {}
+		let headers = {'Content-Type': 'application/json'}
 		if (localStorage.getItem('accessToken')) headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`
 		return headers
 	}

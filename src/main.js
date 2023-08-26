@@ -9,7 +9,6 @@ import store from './store'
 import router from './router'
 
 import auth from './plugins/auth'
-import axios from './plugins/axios'
 import vuetify from './plugins/vuetify'
 import pushNotification from './plugins/push-notification'
 import registerSW from './plugins/register-service-worker'
@@ -17,7 +16,6 @@ import registerSW from './plugins/register-service-worker'
 const app = createApp(App)
 
 app.use(auth)
-app.use(axios)
 app.use(store)
 app.use(router)
 app.use(vuetify)
