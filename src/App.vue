@@ -145,8 +145,11 @@ label {
 			border-radius: 8px !important;
 		}
 		.v-list-item__prepend {
+			.v-icon, .v-btn {
+				margin-right: 12px;
+			}
 			.v-list-item__spacer {
-				width: 24px !important;
+				width: unset !important;
 			}
 		}
 	}
