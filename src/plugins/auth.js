@@ -21,14 +21,14 @@ class Auth {
 	authenticate(data, goto='/') {
 		localStorage.setItem('accessToken', data.accessToken)
 		localStorage.setItem('user', JSON.stringify(data.user))
-		this.vue.$store.commit('setAuthenticate', true)
+		this.vue.$store.commit('setAuthenticated', true)
 		this.vue.$router.push(goto ?? '/').catch(e=>{})
 		this.vue.$pushNotification.checkPermission()
 	}
 
 	deauthenticate(localOnly=false) {
 		if (!localOnly)fetch(`${process.env.VUE_APP_API_HOST}/auth`, {method: 'delete', headers: this.headers})
-		this.vue.$store.commit('setAuthenticate', false)
+		this.vue.$store.commit('setAuthenticated', false)
 		localStorage.removeItem('accessToken')
 		localStorage.removeItem('user')
 		this.vue.$router.push('/login').catch(e=>{})

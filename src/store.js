@@ -17,7 +17,7 @@ export default createStore({
 		setUpdateAvailable(state, value) {
 			state.updateAvailable = value
 		},
-		setAuthenticate(state, value) {
+		setAuthenticated(state, value) {
 			state.authenticated = value
 		},
 		setAlert(state, data) {

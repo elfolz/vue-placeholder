@@ -129,7 +129,7 @@ label {
 	}
 }
 .v-list {
-	border-radius: 8px !important;
+	border-radius: 6px !important;
 	&.flat {
 		padding: 0 !important;
 		.v-list-item {
@@ -140,7 +140,6 @@ label {
 		background: transparent !important;
 	}
 	.v-list-item {
-		border-radius: 8px;
 		&:before {
 			border-radius: 8px !important;
 		}
@@ -217,7 +216,7 @@ label {
 }
 .v-skeleton-loader {
 	background: unset !important;
-	.v-skeleton-loader__paragraph, .v-skeleton-loader__list-item-two-line, .v-skeleton-loader__sentences {
+	.v-skeleton-loader__paragraph, .v-skeleton-loader__list-item-two-line, .v-skeleton-loader__sentences, .v-skeleton-loader__list-item-avatar {
 		&:after {
 			display: none;
 		}
