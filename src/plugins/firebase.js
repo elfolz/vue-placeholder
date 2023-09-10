@@ -18,7 +18,7 @@ const firebaseApp = initializeApp({
 
 const messaging = getMessaging(firebaseApp)
 
-let auth, database
+let auth, db
 if (process.env.NODE_ENV == 'development') {
 	auth = getAuth()
 	connectAuthEmulator(auth, process.env.VUE_APP_FIREABSE_AUTH_EMULATOR_HOST)
