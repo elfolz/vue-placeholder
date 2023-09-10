@@ -11,7 +11,8 @@
 	},
 	"dependencies": {
 		"core-js": "^3.32.1",
-		"firebase": "^10.2.0",
+		"dexie": "^3.2.4",
+		"firebase": "^10.3.1",
 		"register-service-worker": "^1.7.2",
 		"vue": "^3.3.4",
 		"vue-gtag-next": "^1.14.0",

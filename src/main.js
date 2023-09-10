@@ -8,6 +8,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 
+import idb from './plugins/idb'
 import auth from './plugins/auth'
 import vuetify from './plugins/vuetify'
 import pushNotification from './plugins/push-notification'
@@ -15,6 +16,7 @@ import registerSW from './plugins/register-service-worker'
 
 const app = createApp(App)
 
+app.use(idb)
 app.use(auth)
 app.use(store)
 app.use(router)

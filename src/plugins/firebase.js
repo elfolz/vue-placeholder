@@ -1,9 +1,8 @@
-/* 'use strict'
+'use strict'
 
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getDatabase } from 'firebase/database'
-import { getMessaging } from 'firebase/messaging'
+import { getAuth, connectAuthEmulator } from 'firebase/auth'
+import { getDatabase, connectDatabaseEmulator } from 'firebase/database'
 
 const firebaseApp = initializeApp({
 	databaseURL: process.env.VUE_APP_FIREBASE_DATABASE,
@@ -16,14 +15,12 @@ const firebaseApp = initializeApp({
 	measurementId: process.env.VUE_APP_FIREBASE_ANALYTICS_ID
 })
 
-const messaging = getMessaging(firebaseApp)
-
 let auth, db
 if (process.env.NODE_ENV == 'development') {
 	auth = getAuth()
 	connectAuthEmulator(auth, process.env.VUE_APP_FIREABSE_AUTH_EMULATOR_HOST)
 	db = getDatabase()
-	connectDatabaseEmulator(database, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_HOST, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_PORT)
+	connectDatabaseEmulator(db, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_HOST, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_PORT)
 } else {
 	auth = getAuth(firebaseApp)
 	db = getDatabase(firebaseApp)
@@ -31,4 +28,4 @@ if (process.env.NODE_ENV == 'development') {
 
 if (navigator.language) auth.languageCode = navigator.language.split('-')[0]
 
-export {auth, db} */
+export {auth, db}
