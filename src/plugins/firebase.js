@@ -2,8 +2,8 @@
 
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
 import { getMessaging } from 'firebase/messaging'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
 
 const firebaseApp = initializeApp({
 	databaseURL: process.env.VUE_APP_FIREBASE_DATABASE,
@@ -16,15 +16,19 @@ const firebaseApp = initializeApp({
 	measurementId: process.env.VUE_APP_FIREBASE_ANALYTICS_ID
 })
 
-const auth = getAuth(firebaseApp)
 const messaging = getMessaging(firebaseApp)
 
-let firestore
+let auth, database
 if (process.env.NODE_ENV == 'development') {
-	firestore = getFirestore()
-	connectFirestoreEmulator(firestore, 'localhost', 9090)
+	auth = getAuth()
+	connectAuthEmulator(auth, process.env.VUE_APP_FIREABSE_AUTH_EMULATOR_HOST)
+	db = getDatabase()
+	connectDatabaseEmulator(database, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_HOST, process.env.VUE_APP_FIREBASE_DATABASE_EMULATOR_PORT)
 } else {
-	firestore = getFirestore(firebaseApp)
+	auth = getAuth(firebaseApp)
+	db = getDatabase(firebaseApp)
 }
 
-export {auth, messaging, firestore} */
+if (navigator.language) auth.languageCode = navigator.language.split('-')[0]
+
+export {auth, db} */

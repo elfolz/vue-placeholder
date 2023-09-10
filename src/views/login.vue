@@ -52,7 +52,7 @@ export default {
 				user.socialId = user.uid
 				user.firebaseId = result.user.uid
 				delete user.uid
-				this.$auth.authenticate(user, localStorage.getItem('pendingPath'))
+				this.$auth.authenticate({user: user, accessToken: result.user.accessToken}, localStorage.getItem('pendingPath'))
 				localStorage.removeItem('pendingPath')
 			})
 			.catch(error => {

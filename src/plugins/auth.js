@@ -11,9 +11,10 @@ class Auth {
 
 	attempt() {
 		if (!navigator.onLine || !this.authenticated) return
-		fetch(`${process.env.VUE_APP_API_HOST}/auth`, {headers: this.headers})
-		.then(response => {
-			if (response.status != 200) this.deauthenticate(true)
+		auth.onAuthStateChanged(user => {
+			if (!user) return this.deauthenticate()
+			localStorage.setItem('accessToken', user.accessToken)
+			this.checkSubscription()
 		})
 		this.vue.$pushNotification.checkPermission()
 	}
