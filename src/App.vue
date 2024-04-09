@@ -6,9 +6,7 @@
 		<v-snackbar v-model="updateAvailable" location="top" close-delay="60000" color="primary" @click="updateApp()">
 			Atualização disponível
 			<template v-slot:actions>
-				<v-btn text icon>
-					<v-icon icon="cached" />
-				</v-btn>
+				<v-btn icon="cached" />
 			</template>
 		</v-snackbar>
 		<!-- general alerts -->
@@ -74,6 +72,9 @@ export default {
 }
 *:focus {
 	outline: none;
+}
+:root {
+	color-scheme: light dark;
 }
 ::-webkit-scrollbar {
 	width: 8px;
@@ -216,7 +217,7 @@ label {
 }
 .v-skeleton-loader {
 	background: unset !important;
-	.v-skeleton-loader__paragraph, .v-skeleton-loader__list-item-two-line, .v-skeleton-loader__sentences, .v-skeleton-loader__list-item-avatar {
+	.v-skeleton-loader__paragraph, .v-skeleton-loader__list-item-two-line, .v-skeleton-loader__sentences, .v-skeleton-loader__list-item-avatar, .v-skeleton-loader__list-item-avatar-two-line, .v-skeleton-loader__list-item-avatar-three-line {
 		&:after {
 			display: none;
 		}
@@ -268,10 +269,8 @@ label {
 	opacity: 1 !important;
 }
 .v-tabs {
-	&.no-header {
-		.v-tabs-bar {
-			display: none;
-		}
+	&.headerless {
+		display: none;
 	}
 	.v-tabs-bar, .v-tabs-items {
 		background-color: unset !important;
