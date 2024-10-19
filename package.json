@@ -3,9 +3,10 @@
 	"homepage": "https://elfolz.app.br",
 	"version": "1.0.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
+		"start": "vite",
+		"build": "vite build",
 		"adb:pair": "adb pair 192.168.0.144:XXXXX XXXXXX",
 		"adb": "adb connect 192.168.0.144:XXXXX"
 	},
@@ -22,12 +23,11 @@
 		"vuex": "^4.1.0"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "^5.0.8",
-		"@vue/cli-plugin-pwa": "^5.0.8",
-		"@vue/cli-plugin-router": "^5.0.8",
-		"@vue/cli-plugin-vuex": "^5.0.8",
-		"sass": "^1.66.1",
-		"sass-loader": "^13.3.2"
+		"@vitejs/plugin-vue": "^5.0.5",
+		"sass": "^1.80.3",
+		"vite": "^5.3.1",
+		"vite-plugin-pwa": "^0.20.0",
+		"vite-plugin-vue-devtools": "^7.3.4"
 	},
 	"browserslist": [
 		"last 5 Chrome versions",

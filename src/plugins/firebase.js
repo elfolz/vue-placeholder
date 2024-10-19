@@ -15,6 +15,8 @@ const firebaseApp = initializeApp({
 	measurementId: process.env.VUE_APP_FIREBASE_ANALYTICS_ID
 })
 
+const messaging = getMessaging(firebaseApp)
+
 let auth, db
 if (process.env.NODE_ENV == 'development') {
 	auth = getAuth()
@@ -28,4 +30,4 @@ if (process.env.NODE_ENV == 'development') {
 
 if (navigator.language) auth.languageCode = navigator.language.split('-')[0]
 
-export {auth, db}
+export {auth, db, messaging}

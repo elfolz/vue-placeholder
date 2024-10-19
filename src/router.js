@@ -20,7 +20,7 @@ const routes = [
 		component: () => import(/* webpackPrefetch: true */ "./views/privacy-policy.vue")
 	},
 	{
-		path: '/',
+		path: '/:pathMatch(.*)*',
 		name: 'Home',
 		component: home
 	}
@@ -31,6 +31,6 @@ const router = createRouter({
 	routes
 })
 
-if (process.env.VUE_APP_FIREBASE_ANALYTICS_ID && process.env.NODE_ENV == 'production') trackRouter(router)
+if (process.env.VUE_APP_FIREBASE_ANALYTICS_ID) trackRouter(router)
 
 export default router

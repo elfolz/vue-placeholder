@@ -27,7 +27,7 @@ app.mount('#app')
 
 registerSW(app)
 
-if (process.env.VUE_APP_FIREBASE_ANALYTICS_ID && process.env.NODE_ENV == 'production') {
+if (process.env.VUE_APP_FIREBASE_ANALYTICS_ID) {
 	app.use(VueGtag, {
 		property: { id: process.env.VUE_APP_FIREBASE_ANALYTICS_ID }
 	})

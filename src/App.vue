@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import deviceInfo from './lib/deviceChecker'
-import bannerInstallPwa from './components/bannerInstallPwa'
+import deviceInfo from './helpers/deviceInfo'
+import bannerInstallPwa from './components/bannerInstallPwa.vue'
 import bannerCookiesWarning from './components/bannerCookiesWarning.vue'
 
 export default {
