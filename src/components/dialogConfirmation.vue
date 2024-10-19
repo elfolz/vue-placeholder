@@ -2,8 +2,7 @@
 	<v-dialog v-model="show" content-class="dialog-confirm">
 		<v-card>
 			<v-card-title></v-card-title>
-			<v-card-text v-html="message">
-			</v-card-text>
+			<v-card-text v-html="message"></v-card-text>
 			<v-card-actions>
 				<v-btn variant="text" @click="cancel()">
 					<v-icon icon="clear" />&nbsp;Não

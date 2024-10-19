@@ -3,10 +3,12 @@
 		<!-- content -->
 		<router-view />
 		<!-- update available -->
-		<v-snackbar v-model="updateAvailable" location="top" close-delay="60000" color="primary" @click="updateApp()">
-			Atualização disponível
-			<template v-slot:actions>
-				<v-btn icon="cached" />
+		<v-snackbar v-model="updateAvailable" top @click.native="updateApp" :timeout="30000" color="primary" class="clickable">
+			Atualização disponível&nbsp;
+			<template v-slot:action>
+				<v-btn text icon @click="updateApp()">
+					<v-icon>cached</v-icon>
+				</v-btn>
 			</template>
 		</v-snackbar>
 		<!-- general alerts -->
@@ -19,13 +21,14 @@
 			</template>
 		</v-snackbar>
 		<!-- install pwa -->
-		<banner-install-pwa />
+		<banner-install-pwa v-if="!device.standalone" />
 		<!-- cookies -->
 		<banner-cookies-warning />
 	</v-app>
 </template>
 
 <script>
+import deviceInfo from './lib/deviceChecker'
 import bannerInstallPwa from './components/bannerInstallPwa'
 import bannerCookiesWarning from './components/bannerCookiesWarning.vue'
 
@@ -53,10 +56,18 @@ export default {
 		},
 		alertData: function () {
 			return this.$store.state.alertData
+		},
+		device() {
+			return deviceInfo()
 		}
 	},
 	created() {
 		if (this.$auth.authenticated) this.$auth.attempt()
+	},
+	mounted() {
+		window.addEventListener('resize', () => {
+			this.$store.dispatch('resize')
+		})
 	},
 	methods: {
 		updateApp() {
@@ -112,14 +123,14 @@ label {
 	}
 }
 .emoji {
-	font-family: "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols, "EmojiOne Mozilla" !important;
+	font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "Emoji Symbols", "EmojiOne Mozilla" !important;
 	font-weight: 400 !important;
 }
 .v-application__wrap {
 	padding-top: env(safe-area-inset-top, 0);
 	padding-bottom: env(safe-area-inset-bottom, 0);
-	height: 100lvh !important;
-	min-height: 100lvh !important;
+	height: 100dvh !important;
+	min-height: 100dvh !important;
 	overflow: auto;
 }
 .v-toolbar {

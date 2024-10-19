@@ -7,6 +7,7 @@ class PushNotification {
 
 	constructor(app) {
 		this.app = app
+		/* this.checkPermission() */
 	}
 
 	checkPermission() {

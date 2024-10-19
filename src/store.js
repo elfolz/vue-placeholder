@@ -7,6 +7,7 @@ export default createStore({
 		authenticated: localStorage.getItem('accessToken') ? true : false,
 		requestNotificationPermission: null,
 		updateAvailable: false,
+		resize: false,
 		alert: false,
 		alertData: {}
 	},
@@ -25,9 +26,18 @@ export default createStore({
 		},
 		setAlertData(state, data) {
 			state.alertData = data
+		},
+		resize(state, value) {
+			state.resize = value
 		}
 	},
 	actions: {
+		resize(state) {
+			state.commit('resize', true)
+			setTimeout(() => {
+				state.commit('resize', false)
+			}, 100)
+		},
 		openAlert({commit}, data) {
 			if (!data.text) return
 			commit('setAlertData', data)
