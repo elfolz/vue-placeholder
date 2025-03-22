@@ -7,16 +7,13 @@ export default defineConfig((mode) => {
 	const env = loadEnv(mode, process.cwd(), '')
 
 	for (let i in env) {
-		if (!['VUE', 'BASE_URL'].some(el => i.startsWith(el))) delete env[i]
+		if (!['VUE', 'BASE_URL', 'NODE_ENV'].some(el => i.startsWith(el))) delete env[i]
 	}
 
 	return {
 		base: '/',
 		define: {
-			...Object.keys(env).reduce((prev, key) => {
-				prev[`process.env.${key}`] = JSON.stringify(env[key])
-				return prev
-			}, {})
+			'process.env': env
 		},
 		css: {
 			preprocessorOptions: {
@@ -34,8 +31,8 @@ export default defineConfig((mode) => {
 					skipWaiting: true
 				},
 				manifest: {
-					name: "Tunerinst",
-					short_name: "Tunerinst",
+					name: "Placeholder",
+					short_name: "Placeholder",
 					theme_color: "#00ffbb",
 					icons: [
 						{
