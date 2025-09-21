@@ -41,3 +41,13 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+.dialog-confirm {
+	.v-card {
+		.v-card-actions {
+			justify-content: space-between !important;
+		}
+	}
+}
+</style>
